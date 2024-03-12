@@ -80,6 +80,9 @@
 import axios from "axios";
 import { onMounted, ref, nextTick } from 'vue';
 const users = ref([])
+// const totalPages = ref(0)
+// const currentPage = ref(1)
+// const limit = ref(10)
 const modalSec = ref(false)
 const SingleOne = ref({})
 const formData = ref({
@@ -143,6 +146,8 @@ const onFetch = async() => {
     try {
         const response = await axiosInstance.get("/admin/users");
         users.value = response.data.data.users;
+        currentPage.value = response.data.data.page;
+        totalPages.value = response.data.data.totalPages;
     } catch (error) {
         console.error(error)
 }
@@ -222,6 +227,6 @@ const adminEdit = async(userId) => {
 }
 }
 onMounted(() => {
-     onFetch();
+    onFetch();
 });
 </script>
