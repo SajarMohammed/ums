@@ -30,7 +30,7 @@
                     <input type="file" @change="userImage($event)" >
                 </div>
                 <div>
-                    <button class="w-[150px] h-[40px] rounded-[7px] bg-green-700 font-bold" >Save Changes</button>
+                    <button type="submit" class="w-[150px] h-[40px] rounded-[7px] bg-green-700 font-bold" >Save Changes</button>
                 </div>
             </form>
         </div>
@@ -48,9 +48,10 @@ const ModalOpen = () =>{
     modalPopup.value = !modalPopup.value
     resetFormData();
 }
-const fullEdit = () =>{
-   userEdit();
-   userFetch()
+const fullEdit = async() =>{
+  await userEdit();
+  await userFetch()
+  modalPopup.value = !modalPopup.value
 }
 const resetFormData = () => {
     formData.value.firstName = singleUser.value.firstName || '';
@@ -108,8 +109,6 @@ const userEdit = async() => {
                 'Authorization': `Bearer ${accessToken}`
             }
         });
-
-        modalPopup.value = false;
     }catch (error) {
   console.error("Error updating user:", error.response ? error.response.data : error);
 }
@@ -137,6 +136,7 @@ const userImage = async(event) => {
         }
     })
     imagePath.value = response.data.data.file.path
+    singleUser.value.profilePictureUrl = imagePath.value;
   } catch(error) {
       console.error("Error:", error.response ? error.response.data : error);
   }

@@ -35,7 +35,7 @@
                 </div>
                 <hr>
                 <div class="mt-6 w-full h-[70%]">
-                    <form class="w-[88%] flex flex-col gap-1 mm:gap-4 mx-auto" >
+                    <form class="w-[88%] flex flex-col gap-1 mm:gap-4 mx-auto" @submit.prevent="AdminEditUser(SingleOne.id)">
                         <div class="flex flex-col gap-1 tablet:gap-2 tablet:flex-row">
                             <div>
                               <label>FirstName</label>
@@ -66,7 +66,7 @@
                                 <input type="password" v-model="formData.password"  name="password" placeholder="Enter password" class="w-full h-[30px] tablet:h-[50px] pl-4 rounded-[5px] border-[1px] border-solid border-gray-300  focus:ring-[1px] focus:ring-blue-200 focus:outline-none focus:shadow-sm">
                             </div>
                         <div class="flex gap-10">
-                            <button class="w-full h-[40px] rounded-[5px] bg-blue-500 text-white" @click="AdminEditUser(SingleOne.id)">Edit account</button>
+                            <button type="submit" class="w-full h-[40px] rounded-[5px] bg-blue-500 text-white" >Edit account</button>
                             <button class="w-full h-[40px] rounded-[5px] bg-blue-500 text-white" @click="modalOpen">Back</button>
                         </div>
                     </form>
@@ -119,8 +119,9 @@ const deleteUser = async(userId) => {
 };
 const AdminEditUser = async(userId) => {
   await adminEdit(userId);
-  // await onFetch();
-  // await nextTick()
+  await onFetch();
+  await nextTick();
+  modalSec.value = !modalSec.value
 }
 const onFetch = async() => {
     const userDataString = localStorage.getItem('userData');
