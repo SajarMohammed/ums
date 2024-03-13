@@ -1,6 +1,6 @@
 <template>
     <div class="bg-[#007bff] w-full h-screen flex items-center justify-center">
-       <div class="w-[98%] h-[70%] tablet:w-[450px] tablet:h-[500px] bg-white rounded-[6px]">
+       <div class="w-[98%] h-[70%] tablet:w-[450px] tablet:h-[500px] bg-white rounded-[6px] relative">
        <div class="flex items-center justify-center w-full h-[18%]">
         <h1 class="text-2xl font-sans">Login</h1>
        </div>
@@ -20,7 +20,7 @@
                   <label>Remember Password</label>
                </div>
                <div class="flex items-center justify-between ">
-                  <li class="list-none text-[14px] text-blue-800 hover:underline">Forgot password?</li>
+                  <li class="list-none text-[14px] text-blue-800 hover:underline" @click="forgotModal">Forgot password?</li>
                   <button class="bg-blue-600 w-[70px] h-[40px] text-white rounded-[6px]">Login</button>
                </div>
             </form>
@@ -28,6 +28,11 @@
           <hr>
           <div class="flex items-center justify-center w-full h-[10%]">
             <span class="text-[14px] text-blue-800 hover:underline"><router-link to="/register">Need an account? Sign up!</router-link></span>
+          </div> 
+          <div v-if="modalOpen" class="w-[400px] h-[200px] rounded-lg bg-yellow-950 absolute top-[200px] left-[30px] flex flex-col items-center justify-center gap-5">
+            <label class="text-white"> Enter Email Address</label>
+            <input type="email" class="w-[90%] h-[40px] rounded-lg focus:outline-none">
+            <button class="bg-green-400 w-[150px] h-[40px] rounded-lg" @click="forgotModal">Send OTP</button>
           </div>
        </div>
     </div>
@@ -41,7 +46,10 @@ import { useRouter } from "vue-router";
 const email = ref('');
 const password = ref('');
 const router = useRouter()
-
+const modalOpen = ref(false)
+const forgotModal = ()=>{
+   modalOpen.value = !modalOpen.value
+}
 const formSubmit = async() => {
   const response = await axios.post("http://localhost:3000/api/auth/login", {
     email: email.value,

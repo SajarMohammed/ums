@@ -80,8 +80,8 @@
 import axios from "axios";
 import { onMounted, ref, nextTick } from 'vue';
 const users = ref([])
-// const totalPages = ref(0)
-// const currentPage = ref(1)
+// const totalPages = ref("")
+// const currentPage = ref("")
 // const limit = ref(10)
 const modalSec = ref(false)
 const SingleOne = ref({})
@@ -122,9 +122,8 @@ const deleteUser = async(userId) => {
 };
 const AdminEditUser = async(userId) => {
   await adminEdit(userId);
+  await nextTick(); 
   await onFetch();
-  await nextTick();
-  modalSec.value = !modalSec.value
 }
 const onFetch = async() => {
     const userDataString = localStorage.getItem('userData');
@@ -146,8 +145,10 @@ const onFetch = async() => {
     try {
         const response = await axiosInstance.get("/admin/users");
         users.value = response.data.data.users;
-        currentPage.value = response.data.data.page;
-        totalPages.value = response.data.data.totalPages;
+        // currentPage.value = response.data.data.page;
+        // totalPages.value = response.data.data.totalPages;
+        // console.log(currentPage.value)
+        // console.log(totalPages.value)
     } catch (error) {
         console.error(error)
 }
@@ -221,7 +222,7 @@ const adminEdit = async(userId) => {
                 'Authorization': `Bearer ${accessToken}`
             }
         });
-        modalPopup.value = false;
+        modalSec.value = false;
     }catch (error) {
   console.error("Error updating user:", error.response ? error.response.data : error);
 }
