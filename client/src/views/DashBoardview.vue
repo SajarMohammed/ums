@@ -20,16 +20,16 @@
       <div class="flex flex-row min-h-[calc(100vh-60px)]">
         <aside :class="`bg-gray-400 transition-all text-lg text-white delay-300 duration-700 ease-in-out ${open ? 'w-[220px]' : 'w-[0px]'}`">
     <div v-if="role == 'admin'" :class="`w-full h-full flex flex-col items-center mt-[60px] gap-8 ${open ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'} transition-all delay-300 duration-600 ease-in-out`">
-      <button @click="setActiveComponent('dashboard')"><i class="fa-solid fa-table-columns"></i>  Dashboard</button>
-      <button @click="setActiveComponent('addUser')"><i class="fa-solid fa-user"></i>  Add New User</button>
-      <button @click="setActiveComponent('profile')"><i class="fa-solid fa-address-card"></i> Profile</button>
+      <button @click="setActiveComponent('dashboard')" class="flex items-center gap-12"><i class="fa-solid fa-table-columns"></i><span>Dashboard</span></button>
+      <button @click="setActiveComponent('addUser')" class="flex items-center gap-6"><i class="fa-solid fa-user"></i> <span> Add New User</span></button>
+      <button @click="setActiveComponent('profile')" class="flex items-center gap-[80px]"><i class="fa-solid fa-address-card"></i> <span>Profile</span></button>
     </div>
     <div v-if="role == 'supervisor'" :class="`w-full h-full flex flex-col items-center mt-[60px] gap-8 ${open ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'} transition-all delay-300 duration-600 ease-in-out`">
-      <button @click="setActiveComponent('dashboard')"><i class="fa-solid fa-table-columns"></i>  Dashboard</button>
-      <button @click="setActiveComponent('profile')"><i class="fa-solid fa-address-card"></i> Profile</button>
+      <button @click="setActiveComponent('dashboard')" class="flex items-center gap-12"><i class="fa-solid fa-table-columns"></i> <span>Dashboard</span> </button>
+      <button @click="setActiveComponent('profile')" class="flex items-center gap-[80px]"><i class="fa-solid fa-address-card"></i>  <span>Profile</span></button>
     </div>
     <div v-if="role == 'agent'" :class="`w-full h-full flex flex-col items-center mt-[60px] gap-8 ${open ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'} transition-all delay-300 duration-600 ease-in-out`">
-      <button @click="setActiveComponent('dashboard')"><i class="fa-solid fa-address-card"></i> Profile</button>
+      <button @click="setActiveComponent('dashboard')" class="flex items-center gap-[80px]"><i class="fa-solid fa-address-card"></i> <span>Profile</span></button>
     </div>
   </aside>
       <div class="flex-1">

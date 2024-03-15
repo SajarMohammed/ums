@@ -117,7 +117,7 @@ const editUser = async(userId) => {
 
 };
 const deleteUser = async(userId) => {
-  await handleDelete(userId);
+  await handleDelete(userId); 
   await onFetch()
 };
 const AdminEditUser = async(userId) => {
@@ -223,6 +223,7 @@ const adminEdit = async(userId) => {
             }
         });
         modalSec.value = false;
+        window.relocation.reload()
     }catch (error) {
   console.error("Error updating user:", error.response ? error.response.data : error);
 }

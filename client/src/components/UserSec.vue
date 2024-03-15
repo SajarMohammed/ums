@@ -109,6 +109,7 @@ const userEdit = async() => {
                 'Authorization': `Bearer ${accessToken}`
             }
         });
+        window.relocation.reload()
     }catch (error) {
   console.error("Error updating user:", error.response ? error.response.data : error);
 }

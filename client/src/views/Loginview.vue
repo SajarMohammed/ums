@@ -9,11 +9,13 @@
             <form class="flex flex-col gap-6 mx-auto w-[85%]" @submit.prevent="formSubmit">
                <div class="flex flex-col ">
                   <label>Email</label>
-                  <input type="email" v-model="email" placeholder="Enter email address" class="w-full h-[30px] tablet:h-[50px] pl-4 rounded-[5px] border-[1px] border-solid border-gray-300  focus:ring-[1px] focus:ring-blue-200 focus:outline-none focus:shadow-sm">
+                  <input required
+                   type="email" v-model="email" placeholder="Enter email address" class="w-full h-[30px] tablet:h-[50px] pl-4 rounded-[5px] border-[1px] border-solid border-gray-300  focus:ring-[1px] focus:ring-blue-200 focus:outline-none focus:shadow-sm">
                </div>
                <div>
                   <label>Password</label>
                   <input type="password" v-model="password" placeholder="Enter password" class="w-full h-[30px] tablet:h-[50px] pl-4 rounded-[5px] border-[1px] border-solid border-gray-300 focus:ring-[1px] focus:ring-blue-200 focus:outline-none focus:shadow-sm">
+                  <span class="text-red-500 pt-4 text-center">{{ error }}</span>
                </div>
                <div class="flex gap-3">
                   <input type="checkbox" placeholder="username">
@@ -22,6 +24,7 @@
                <div class="flex items-center justify-between ">
                   <li class="list-none text-[14px] text-blue-800 hover:underline" @click="forgotModal">Forgot password?</li>
                   <button class="bg-blue-600 w-[70px] h-[40px] text-white rounded-[6px]">Login</button>
+                 
                </div>
             </form>
           </div>
@@ -46,11 +49,13 @@ import { useRouter } from "vue-router";
 const email = ref('');
 const password = ref('');
 const router = useRouter()
+const error = ref('')
 const modalOpen = ref(false)
 const forgotModal = ()=>{
    modalOpen.value = !modalOpen.value
 }
 const formSubmit = async() => {
+   try{
   const response = await axios.post("http://localhost:3000/api/auth/login", {
     email: email.value,
     password: password.value,
@@ -59,15 +64,23 @@ const formSubmit = async() => {
   const accessToken = response.data.data.user.accessToken;
   const refreshToken = response.data.data.user.refreshToken; 
   const role = response.data.data.user.role;
+  if( response.status == 401){
+      error.value == "invalid email or password"
+  }
   if (role){
    router.push("/dashboard")
-  } const userData = {
+  const userData = {
       role,
       accessToken,
       refreshToken,
     };
 
     localStorage.setItem('userData', JSON.stringify(userData));
-
+ }
+}catch(err){
+   if(err.response && err.response.status === 401){
+      error.value = "invalid email or password"
+   }
+ }
 };
 </script>
